@@ -117,8 +117,89 @@ Note that the container image has not been updated with the new code, so if you 
 
 ## Part F - Create a database container from a public image
 
+Create a mysql container in the compose.yaml file. We are going to use a public image from DockerHub, you can see here which tagged versions are available, how to use the image, details on any environment variables you need to send in etc.
+- https://hub.docker.com/_/mysql
 
+Start the application stack.
+- docker compose up -d
+
+To confirm the database is running, we can connect a shell into the database container and take a look around.
+- docker ps
+- docker exec -it \<mysql-container-id\> /bin/bash
+- mysql -u root -p
+    - and enter the password `secret`
+
+This is the mysql shell, let's take a look and see if the todos database exists
+- SHOW DATABASES;
+- SHOW TABLES FROM todos;
+- exit
+- exit
 
 ## Part G - Connect your application to the database, via a Docker network
 
+By default, Docker compose creates a single network for your application, so, if we are using Docker compose, we don't need to do anything further to enable the containers to talk to each other. If you are not using Docker compose, as per the beginning of this workshop, you will need to create a network and connect the containers to it.
+- docker network create todo-app-network
+- docker run ... --network todo-app-network ...
+
+Docker will manage the network and resolve the correct IP address of the container via the container name.
+
+Checkout the updated version of the Python Flask To Do Application, this one uses a database instead of a local array to store the to do list items.
+- git checkout app-with-database
+
+Update the application container in the compose.yaml file to send in the following environment variables:
+- MYSQL_HOST
+- MYSQL_USER
+- MYSQL_PASSWORD
+- MYSQL_DB
+
+Note that using environmental variables for connection settings like this is fine for development, but in production we need a more secure mechanism. Docker secrets can be used but are beyond the scope of this workshop.
+
+Start the application stack.
+- docker compose up -d
+
+Follow the logs and watch the application connect to the database.
+- docker compose logs -f
+
+Add some items to the todo list. Connect to the mysql database shell and see that the items have been added to the database table.
+- docker ps
+- docker exec -it \<mysql-container-id\> /bin/bash
+- mysql -u root -p todos
+    - and enter the password `secret`
+- SELECT * FROM todo;
+- exit
+
+You will now also be able to see the network in Docker.
+- docker network ls
+
 ## Part H - Create a volume for the database to persist the data
+
+Your to do list is empty every time we start the container, this is because the container and all of it's changes are destroyed when we shut it down. We can persist the database data by creating a volume.
+
+If you are not using Docker compose, as per the beginning of this workshop, you will need to create a volume and connect the containers to it.
+- docker volume create todo-app-volume
+- docker run ... --mount type=volume,src=todo-app-volume,target=/var/lib/mysql ...
+
+Update the mysql container in the compose.yaml file to create a volume.
+
+Start the application stack.
+- docker compose up -d
+
+Add some items to the todo list. Stop and remove the containers.
+- docker ps
+- docker stop \<container-id\>
+- docker rm \<container-id\>
+- docker image ls
+- docker image rm \<image-id\>
+
+Start the application stack again.
+- docker compose up -d
+
+Take a look at your to do list and see that the items have persisted.
+
+You will now also be able to see the volume in Docker.
+- docker volume ls
+
+# Further Reading
+
+- [Docker Secrets](https://docs.docker.com/compose/use-secrets/)
+- [The Complete Guide to Docker Secrets](https://earthly.dev/blog/docker-secrets/)
