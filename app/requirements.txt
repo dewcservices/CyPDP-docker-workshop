@@ -1,1 +1,4 @@
 flask
+pymysql
+flask_sqlalchemy
+cryptography
