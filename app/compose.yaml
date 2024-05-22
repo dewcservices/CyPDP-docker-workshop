@@ -25,3 +25,12 @@ services:
     # your browser or anywhere else outside the container from the HOST_PORT.
     ports:
       - 8000:5000
+
+  # The name of our database service.
+  mysql:
+    # The public image name and tag from DockerHub that we want to use for our container.
+    image: mysql:8.0
+    # Environment variables that we need to send into the container, specified on DockerHub.
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: todos
