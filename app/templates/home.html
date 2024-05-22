@@ -22,18 +22,18 @@
 
             <hr />
 
-            {% for todoid in todo_list %}
+            {% for todo in todo_list %}
             <div class="ui segment">
-                <p class="ui big header">{{ todoid }} | {{ todo_list[todoid].title }}</p>
+                <p class="ui big header">{{ todo.id }} | {{ todo.title }}</p>
 
-                {% if todo_list[todoid].completed == False %}
+                {% if todo.completed == False %}
                 <span class="ui red label">Not Complete</span>
                 {% else %}
                 <span class="ui green label">Complete</span>
                 {% endif %}
 
-                <a class="ui blue button" href="/update/{{ todoid }}">Complete</a>
-                <a class="ui blue button" href="/delete/{{ todoid }}">Delete</a>
+                <a class="ui blue button" href="/update/{{ todo.id }}">Complete</a>
+                <a class="ui blue button" href="/delete/{{ todo.id }}">Delete</a>
             </div>
             {% endfor %}
         </div>
