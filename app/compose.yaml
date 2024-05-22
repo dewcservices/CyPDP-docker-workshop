@@ -25,6 +25,13 @@ services:
     # your browser or anywhere else outside the container from the HOST_PORT.
     ports:
       - 8000:5000
+    # Environment variables that we need to send into the container, so this container can connect to
+    # the mysql database inside the mysql container. The application code is expecting these specific variables.
+    environment:
+      MYSQL_HOST: mysql
+      MYSQL_USER: root
+      MYSQL_PASSWORD: secret
+      MYSQL_DB: todos
 
   # The name of our database service.
   mysql:
