@@ -1,0 +1,1 @@
+A file to ignore and not include in the Docker container.
