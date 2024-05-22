@@ -4,6 +4,22 @@ services:
     # The image build context, ie where to look for the Dockerfile and other files, 
     # here we have specified the current directory with '.'
     build: .
+    develop:
+      watch:
+        # Add the watch attribute to sync files between the local filesystem and the container filesystem.
+        # You will notice that path and target match the COPY command from the Dockerfile.
+        - action: sync
+          # The local filesystem path, '.' specifies the current directory.
+          path: .
+          # The container filesystem path.
+          target: /code
+          # Any files you don't want to sync. This is not really necessary as this file is already included
+          # in the .dockerignore file but the example is here for you to see. You could also ignore a directory.
+          ignore:
+            - Dockerfile
+        # You can add different rules for different file paths.
+        - action: rebuild
+          path: requirements.txt
     # Which ports to map from inside and outside the container, in the format HOST_PORT:CONTAINER_PORT.
     # Note that containers will talk to each other via the CONTAINER_PORT and you will access the container from
     # your browser or anywhere else outside the container from the HOST_PORT.
