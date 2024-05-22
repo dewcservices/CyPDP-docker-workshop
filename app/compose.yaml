@@ -1,0 +1,11 @@
+services:
+  # The name of our service.
+  flask-todo-app:
+    # The image build context, ie where to look for the Dockerfile and other files, 
+    # here we have specified the current directory with '.'
+    build: .
+    # Which ports to map from inside and outside the container, in the format HOST_PORT:CONTAINER_PORT.
+    # Note that containers will talk to each other via the CONTAINER_PORT and you will access the container from
+    # your browser or anywhere else outside the container from the HOST_PORT.
+    ports:
+      - 8000:5000
