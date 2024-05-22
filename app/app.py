@@ -1,5 +1,4 @@
 from flask import Flask, render_template, request, redirect, url_for
-import time
 
 app = Flask(__name__)
 
@@ -16,9 +15,7 @@ def add():
     title = request.form.get('title')
     global id_val, todo_list
     new_todo = {'title':title, 'completed':False, 'id':id_val}
-    print(todo_list)
     todo_list[id_val] = new_todo
-    print(todo_list)
     id_val += 1
     return redirect(url_for('home'))
 

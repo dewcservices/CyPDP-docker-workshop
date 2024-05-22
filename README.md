@@ -157,9 +157,6 @@ Note that using environmental variables for connection settings like this is fin
 Start the application stack.
 - docker compose up -d
 
-Follow the logs and watch the application connect to the database.
-- docker compose logs -f
-
 Add some items to the todo list. Connect to the mysql database shell and see that the items have been added to the database table.
 - docker ps
 - docker exec -it \<mysql-container-id\> /bin/bash
