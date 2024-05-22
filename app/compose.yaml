@@ -41,3 +41,12 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: secret
       MYSQL_DATABASE: todos
+    # Tell Docker how to mount the volume that is created at the end of this file, inside the container, with the
+    # format HOST_URL:CONTAINER_URL. The CONTAINER_URL is the directory where the database files are stored for 
+    # mysql inside the container.
+    volumes:
+      - todo-app-volume:/var/lib/mysql
+
+# Declare a list of volumes you want Docker to create.
+volumes:
+  todo-app-volume:
