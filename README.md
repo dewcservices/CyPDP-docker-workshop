@@ -144,6 +144,8 @@ By default, Docker compose creates a single network for your application, so, if
 Docker will manage the network and resolve the correct IP address of the container via the container name.
 
 Checkout the updated version of the Python Flask To Do Application, this one uses a database instead of a local array to store the to do list items.
+- git checkout .
+    - Ensure any changed files are reset to the upstream version. New files will not be affected so your new Dockerfile and compose.yaml files will remain in tact.
 - git checkout app-with-database
 
 Update the application container in the compose.yaml file to send in the following environment variables:
@@ -153,6 +155,13 @@ Update the application container in the compose.yaml file to send in the followi
 - MYSQL_DB
 
 Note that using environmental variables for connection settings like this is fine for development, but in production we need a more secure mechanism. Docker secrets can be used but are beyond the scope of this workshop.
+
+Stop and remove the old containers and images.
+- docker ps
+- docker stop \<container-id\>
+- docker rm \<container-id\>
+- docker image ls
+- docker image rm \<image-id\>
 
 Start the application stack.
 - docker compose up -d
