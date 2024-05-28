@@ -12,6 +12,8 @@ This workshop comes with a simple Python Flask To Do Application to use as a loc
 
 Create a Dockerfile and a .dockerignore file for the application image. Start with a base python image, set any environment variables, set the working directory, install any frameworks and tools you need, expose the application port inside the container, copy in the application files and run the application.
 
+Answers can be found in the branch `part-a-create-dockerfile-build-image`.
+
 Build the image.
 - docker build -t flask-todo-app .
     - -t \<image-name\>[:\<tag-name\>] specifies the name of the image with an optional tag name
@@ -77,6 +79,8 @@ Create a compose.yaml file. We are going to break down the commands we used abov
 - docker run -d -p 8000:5000 flask-todo-app
 We could have had much more complicated commands to create and run the image container, and in that case, the compose file would have been more complex and resulted in simplifying a much more complex  build and run process, however, for this simple example, it is simple enough.
 
+Answers can be found in the branch `part-d-compose-file`.
+
 Stop and remove the old containers and images.
 - docker ps
 - docker stop \<container-id\>
@@ -106,6 +110,8 @@ Tear it all down with:
 
 Update the compose.yaml file to use the watch attribute for development.
 
+Answers can be found in the branch `part-e-watch-attribute`.
+
 Ensure you use the --watch flag when you start the containers, note that this is not compatible with the -d flag.
 - docker compose up --watch
 
@@ -119,6 +125,8 @@ Note that the container image has not been updated with the new code, so if you 
 
 Create a mysql container in the compose.yaml file. We are going to use a public image from DockerHub, you can see here which tagged versions are available, how to use the image, details on any environment variables you need to send in etc.
 - https://hub.docker.com/_/mysql
+
+Answers can be found in the branch `part-f-database-container`.
 
 Start the application stack.
 - docker compose up -d
@@ -154,6 +162,8 @@ Update the application container in the compose.yaml file to send in the followi
 - MYSQL_PASSWORD
 - MYSQL_DB
 
+Answers can be found in the branch `part-g-connect-application-to-database`.
+
 Note that using environmental variables for connection settings like this is fine for development, but in production we need a more secure mechanism. Docker secrets can be used but are beyond the scope of this workshop.
 
 Stop and remove the old containers and images.
@@ -186,6 +196,8 @@ If you are not using Docker compose, as per the beginning of this workshop, you 
 - docker run ... --mount type=volume,src=todo-app-volume,target=/var/lib/mysql ...
 
 Update the mysql container in the compose.yaml file to create a volume.
+
+Answers can be found in the branch `part-h-create-volume`.
 
 Start the application stack.
 - docker compose up -d
